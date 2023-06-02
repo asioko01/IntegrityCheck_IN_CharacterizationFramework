@@ -1,0 +1,10 @@
+bfs     ./parboil run bfs opencl_base 1M
+cutcp       ./parboil run cutcp opencl_base large
+histo       ./parboil run histo opencl_base large
+lbm     ./parboil run lbm opencl_base long
+mri-gridding        ./parboil run mri-gridding opencl_base small
+mri-q       ./parboil run mri-q opencl large
+sad     ./parboil run sad opencl_base large
+sgemm       ./parboil run sgemm opencl_base medium
+spmv        ./parboil run spmv opencl_base large
+stencil     ./parboil run stencil opencl_base default

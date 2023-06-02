@@ -1,0 +1,2 @@
+sad     ./parboil run sad opencl_base large
+sgemm       ./parboil run sgemm opencl_base medium
