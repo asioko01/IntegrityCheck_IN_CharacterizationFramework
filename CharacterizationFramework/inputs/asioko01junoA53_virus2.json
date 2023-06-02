@@ -1,0 +1,89 @@
+{
+
+    "targetHostName":"10.16.20.171",
+    "targetSSHusername":"root",
+    "targetSSHpassword":"root",
+    "sysLogParsingScript":"/media/oldDisk1/root/chf_scripts/printErrorsWithinTimestamps",
+    "helperScriptSetup":"/media/oldDisk1/root/chf_scripts/chf_helper_freq_taskset.sh",
+    "helperScriptWorkload":"/media/oldDisk1/root/chf_scripts/chf_helper_workload.sh",
+    "workloadStatusOutput":"/media/oldDisk1/root/chf_scripts/chf_helper_tmp/workload_status",
+    "integrityCheckScript":"/media/oldDisk1/root/integrity_check_scripts/LinkedList",
+    "userVoltage": 1000,
+
+    "measurePowerScript": null,
+    "serialPort":"COM8",
+    "mongoDB":"juno",
+    "mongoCol":"asioko01a53_virus_10_repetitions_forced",
+
+
+    "experiments":[
+        {
+            "workloads":[
+                {
+                    "work_dir":".",
+                    "cmd_line":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/107_5330_26s",
+                    "toKillName":"107_5330_26s",
+                    "conventionName":"107_5330_26s",
+                    "cores":[0],
+                    "originalOutput":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/ref.out",
+                    "type":"singleThread",
+                    "runOutput":"/media/oldDisk1/root/chf_scripts/chf_helper_tmp/0_out",
+                    "inputs":null,
+                    "VM":false,
+                    "stdin":null
+                },
+
+                {
+                   "work_dir":".",
+                    "cmd_line":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/107_5330_26s",
+                    "toKillName":"107_5330_26s",
+                    "conventionName":"107_5330_26s",
+                    "cores":[3],
+                    "originalOutput":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/ref.out",
+                    "type":"singleThread",
+                    "runOutput":"/media/oldDisk1/root/chf_scripts/chf_helper_tmp/1_out",
+                    "inputs":null,
+                    "VM":false,
+                    "stdin":null
+                } ,
+
+                {
+                    "work_dir":".",
+                    "cmd_line":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/107_5330_26s",
+                    "toKillName":"107_5330_26s",
+                    "conventionName":"107_5330_26s",
+                    "cores":[4],
+                    "originalOutput":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/ref.out",
+                    "type":"singleThread",
+                    "runOutput":"/media/oldDisk1/root/chf_scripts/chf_helper_tmp/2_out",
+                    "inputs":null,
+                    "VM":false,
+                    "stdin":null
+                },
+
+                {
+                   "work_dir":".",
+                    "cmd_line":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/107_5330_26s",
+                    "toKillName":"107_5330_26s",
+                    "conventionName":"107_5330_26s",
+                    "cores":[5],
+                    "originalOutput":"/media/oldDisk1/root/benchmarks/a53emVirusGood26s/ref.out",
+                    "type":"singleThread",
+                    "runOutput":"/media/oldDisk1/root/chf_scripts/chf_helper_tmp/3_out",
+                    "inputs":null,
+                    "VM":false,
+                    "stdin":null
+                }
+            ],
+            "platform":"juno_a53",
+            "core_to_freq":[950,0,0,950,950,950],
+            "repetitions":1,
+            "run_type":"all",
+            "start_voltage":1000,
+            "end_voltage":0,
+            "vol_inc":10,
+            "inc_wait_time":10,
+            "vmin_component":"CORE"
+        }
+      ]
+  }

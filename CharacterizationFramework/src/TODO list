@@ -1,0 +1,22 @@
+ordered by priority
+
+
+count multithread application time .. Big idea to make my life easier just divide by the number of threads.. this is actually not far from real multithread applications
+Error reporting compatible to D4.1 ..
+improve framework speed
+
+
+perf counters //elegant way to add them
+temperatures 
+power
+capture mttr #basically make sure that current counters are correct
+handling reboot ##continously monitor that reboot handling is performend correclty
+
+
+Basic info like timestamp slimpro version os version.. retrieve this information at the configuration function //DONE
+intact kernel error messages //DONE
+multiWorkload //DONE
+SDC //DONE
+
+MULTI WORKLOADS//DONE
+workload execution time //DONE

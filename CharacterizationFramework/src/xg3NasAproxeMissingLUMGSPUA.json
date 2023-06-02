@@ -1,0 +1,122 @@
+{   
+
+    "targetHostName":"10.16.20.162",
+    "targetSSHusername":"root",
+    "targetSSHpassword":"root",
+    "sysLogParsingScript":"/home/root_desktop/chf_scripts/printErrorsWithinTimestamps",
+    "helperScriptSetup":"/home/root_desktop/chf_scripts/chf_helper_freq_taskset.sh",
+    "helperScriptWorkload":"/home/root_desktop/chf_scripts/chf_helper_nas.sh",
+    "workloadStatusOutput":"/home/root_desktop/chf_scripts/chf_tmp/workload_status",
+    "serialPort":"COM20",
+    "mongoDB":"xg3",
+    "mongoCol":"nas_32_3_aproxeMissingLUMGSPUA",
+    "measurePowerScript": "/home/root_desktop/chf_scripts/chf_measure_power.sh",
+    
+    "experiments":[
+         {
+            "workloads":[
+                {
+                    "work_dir":".",
+                    "cmd_line":"/home/root_desktop/run_NPB.sh  /home/root_desktop/NPB3.3/NPB3.3-OMP/bin/ lu.C.x 32",
+                    "toKillName":"lu.C.x",
+                    "conventionName":"lu",
+                    "cores":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+                    "originalOutput":"dummy",
+                    "type":"multiThread",
+                    "runOutput":"/home/root_desktop/chf_scripts/chf_tmp/0_out",
+                    "inputs":"C",
+                    "VM":false,
+                    "stdin":null
+                }
+                    
+            ],          
+            "core_to_freq":[3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000],
+            "repetitions":1,
+            "run_type":"all",
+            "start_voltage":810,
+            "end_voltage":0,
+            "vol_inc":10,
+            "vmin_component":"CORE",
+            "inc_wait_time":10          , "platform":4    ,"online_offline_cores":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]     
+        },
+         {
+            "workloads":[
+                {
+                    "work_dir":".",
+                    "cmd_line":"/home/root_desktop/run_NPB.sh  /home/root_desktop/NPB3.3/NPB3.3-OMP/bin/ mg.C.x 32",
+                    "toKillName":"mg.C.x",
+                    "conventionName":"mg",
+                    "cores":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+                    "originalOutput":"dummy",
+                    "type":"multiThread",
+                    "runOutput":"/home/root_desktop/chf_scripts/chf_tmp/0_out",
+                    "inputs":"C",
+                    "VM":false,
+                    "stdin":null
+                }
+                    
+            ],          
+            "core_to_freq":[3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000],
+            "repetitions":1,
+            "run_type":"all",
+            "start_voltage":810,
+            "end_voltage":0,
+            "vol_inc":10,
+            "vmin_component":"CORE",
+            "inc_wait_time":10            , "platform":4   ,"online_offline_cores":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]    
+        },
+         {
+            "workloads":[
+                {
+                    "work_dir":".",
+                    "cmd_line":"/home/root_desktop/run_NPB.sh  /home/root_desktop/NPB3.3/NPB3.3-OMP/bin/ sp.C.x 32",
+                    "toKillName":"sp.C.x",
+                    "conventionName":"sp",
+                    "cores":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+                    "originalOutput":"dummy",
+                    "type":"multiThread",
+                    "runOutput":"/home/root_desktop/chf_scripts/chf_tmp/0_out",
+                    "inputs":"C",
+                    "VM":false,
+                    "stdin":null
+                }
+                    
+            ],          
+            "core_to_freq":[3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000],
+            "repetitions":1,
+            "run_type":"all",
+            "start_voltage":810,
+            "end_voltage":0,
+            "vol_inc":10,
+            "vmin_component":"CORE",
+            "inc_wait_time":10         , "platform":4    ,"online_offline_cores":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]      
+        },
+         {
+            "workloads":[
+                {
+                    "work_dir":".",
+                    "cmd_line":"/home/root_desktop/run_NPB.sh  /home/root_desktop/NPB3.3/NPB3.3-OMP/bin/ ua.C.x 32",
+                    "toKillName":"ua.C.x",
+                    "conventionName":"ua",
+                    "cores":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+                    "originalOutput":"dummy",
+                    "type":"multiThread",
+                    "runOutput":"/home/root_desktop/chf_scripts/chf_tmp/0_out",
+                    "inputs":"C",
+                    "VM":false,
+                    "stdin":null
+                }
+                    
+            ],          
+            "core_to_freq":[3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000],
+            "repetitions":1,
+            "run_type":"all",
+            "start_voltage":810,
+            "end_voltage":0,
+            "vol_inc":10,
+            "vmin_component":"CORE",
+            "inc_wait_time":10         , "platform":4 ,"online_offline_cores":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]         
+        }
+        
+    ]
+}

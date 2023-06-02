@@ -1,0 +1,177 @@
+#if system_state==self.APP_CRASH:                
+            #   vol_command="sudo i2cset -y 1 0x2f 0x34 " + str(self.SAFE_VOL) +" w;";
+            #  kill_command="pkill "+str(run.prettyName)+" ; sudo reboot"; ##this is needed for multiprocess some tasks may not die.. also TODO in the future record which cores crashed
+                
+            #    print("Attempt to return system to normal state")
+            #   code=sshHandler.executeCommand(vol_command) ##return system to normal voltage
+            #    code=sshHandler.executeCommand(kill_command)
+            #    run.jsonOutput.workloads[0].crash=True;
+            #    run.jsonOutput.system_crash=False;
+                print("JSON "+str(returnJsonAsString(run.jsonOutput))+"\n")
+                print("OUTPUT "+run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" APP_CRASH"+str(crashError))
+                self.__handleRestart_() ##still restart the system after app crash
+                if(code==sshHandler.COMMAND_FAILED):
+                    run.jsonOutput.workloads[0].crash=False;
+                    run.jsonOutput.system_crash=True;
+                    print("JSON "+str(returnJsonAsString(run.jsonOutput))+"\n") #TODO what if many workloads
+                    print("OUTPUT "+run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" SYSTEM_CRASH")
+                    self.__handleRestart_()
+                    break
+            elif system_state==self.SYSTEM_CRASH:
+                run.jsonOutput.workloads[0].crash=False;
+                run.jsonOutput.system_crash=True;
+                print("JSON "+str(returnJsonAsString(run.jsonOutput)))
+                print("OUTPUT "+ run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" SYSTEM_CRASH")
+                self.__handleRestart_()
+                break
+            elif system_state==self.ALIVE:
+                vol_command="sudo i2cset -y 1 0x2f 0x34 " + str(self.SAFE_VOL) +" w;"
+                kill_command="pkill "+str(run.prettyName)+" ;";
+                try:
+                    print("Attempt to return system to normal state")
+                    self.__executeCommand__(vol_command) ##return system to normal voltage
+                    self.__executeCommand__(kill_command)
+                    run.jsonOutput.workloads[0].crash=False; #TODO what if many workloads
+                    run.jsonOutput.system_crash=False;
+                    print("JSON "+str(returnJsonAsString(run.jsonOutput))+"\n")
+                    print("OUTPUT "+run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" NO_CRASH")
+                except(paramiko.SSHException,socket.error,EOFError) as err:
+                    #print ("ssh thread exception raised "+str(err)) ##in the end we have system crash
+                    #print("breaking from vmin process crash found")
+                    run.jsonOutput.workloads[0].crash=False; #TODO what if many workloads
+                    run.jsonOutput.system_crash=True;
+                    print("JSON "+str(returnJsonAsString(run.jsonOutput))+"\n")
+                    print("OUTPUT "+run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" SYSTEM_CRASH")
+                    self.__handleRestart_()
+                    break;
+            elif system_state==self.SDC_OCCURED:
+                vol_command="sudo i2cset -y 1 0x2f 0x34 " + str(self.SAFE_VOL) +" w;";
+                kill_command="pkill "+str(run.prettyName)+" ; sudo reboot"; ##this is needed for multiprocess some tasks may not die.. also TODO in the future record which cores crashed
+                try:
+                    print("Attempt to return system to normal state")
+                    self.__executeCommand__(vol_command) ##return system to normal voltage
+                    self.__executeCommand__(kill_command)
+                    run.jsonOutput.workloads[0].sdc=True;
+                    run.jsonOutput.workloads[0].crash=False;
+                    run.jsonOutput.system_crash=False;
+                    print("JSON "+str(returnJsonAsString(run.jsonOutput))+"\n")
+                    print("OUTPUT "+run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" APP_CRASH"+str(crashError))
+                    self.__handleRestart_() ##still restart the system after app crash
+                except(paramiko.SSHException,socket.error,EOFError) as err:
+                    #print ("ssh thread exception raised "+str(err)) ##in the end we have system crash
+                    #print("breaking from vmin process crash found")
+                    run.jsonOutput.workloads[0].sdc=True;
+                    run.jsonOutput.workloads[0].crash=False;
+                    run.jsonOutput.system_crash=True;
+                    print("JSON "+str(returnJsonAsString(run.jsonOutput))+"\n") #TODO what if many workloads
+                    print("OUTPUT "+run.active_cores+" "+str(run.frequency)+" "+run.idle_cores+" "+str(run.frequency_idle)+" "+str(vmin)+" "+str("\"")+str(run.command_line)+str("\"")+" SYSTEM_CRASH")
+                    self.__handleRestart_()
+                    break
+                    
+                    
+                  @staticmethod
+    def covertXMLtoObject(xml):        
+
+        try:
+            cmd_line=str(xml.attributes["cmd_line"].value)
+        except(AttributeError,KeyError) as err:
+            cmd_line=Experiment.DEF_CMD_LINE
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            work_type=str(xml.attributes["workload_type"].value)
+        except(AttributeError,KeyError) as err:
+            work_type=Experiment.DEF_WORK_TYPE
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            active_cores=str(xml.attributes["active_cores"].value)
+        except(AttributeError,KeyError) as err:
+            active_cores=Experiment.DEF_ACT_CORES
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            idle_cores=str(xml.attributes["idle_cores"].value)
+        except(AttributeError,KeyError) as err:
+            idle_cores=Experiment.DEF_IDL_CORES
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            start_voltage=int(xml.attributes["start_voltage"].value)
+        except(AttributeError,KeyError) as err:
+            start_voltage=Experiment.DEF_START_VOL
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            end_voltage=int(xml.attributes["end_voltage"].value)
+        except(AttributeError,KeyError) as err:
+            end_voltage=Experiment.DEF_END_VOL
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            vol_inc=int(xml.attributes["vol_inc"].value)
+        except(AttributeError,KeyError) as err:
+            vol_inc=Experiment.DEF_VOL_INC
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            frequency=int(xml.attributes["frequency"].value)
+        except(AttributeError,KeyError) as err:
+            frequency=Experiment.DEF_FREQ
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            frequency_idle=int(xml.attributes["frequency_idle"].value)
+        except(AttributeError,KeyError) as err:
+            frequency=Experiment.DEF_FREQ
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            repetitions=int(xml.attributes["repetitions"].value)
+        except(AttributeError,KeyError) as err:
+            repetitions=Experiment.DEF_REP
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            inc_wait_time=int(xml.attributes["inc_wait_time"].value)
+        except(AttributeError,KeyError) as err:
+            inc_wait_time=Experiment.DEF_INC_WAIT
+            print(err)
+            traceback.print_exc()
+            
+        try:
+            run_type=str(xml.attributes["type"].value)
+        except(AttributeError,KeyError) as err:
+            run_type=Experiment.DEF_TYPE
+            print(err)
+            traceback.print_exc()
+        
+        try:
+            original_output=str(xml.attributes["original_output"].value)
+        except(AttributeError,KeyError) as err:
+            if run_type==Experiment.RUN_TYPE_ALL:
+                original_output=""
+                print(err+" WARNING SDC DETECTION WILL NOT WORK CORRECTLY")
+                traceback.print_exc()
+        
+        try:
+            run_output=str(xml.attributes["run_output"].value)
+        except(AttributeError,KeyError) as err:
+            if run_type==Experiment.RUN_TYPE_ALL:
+                run_output=""
+                print(err+" WARNING SDC DETECTION WILL NOT WORK CORRECTLY")
+                traceback.print_exc()
+        
+        #workloads,start_voltage,end_voltage,vol_inc,core_to_frequencies,repetitions,run_type,inc_wait_time=DEF_INC_WAIT
+        newRun=Experiment(cmd_line,work_type,active_cores,idle_cores,start_voltage,end_voltage,vol_inc,frequency,frequency_idle,repetitions,inc_wait_time,run_type,original_output,run_output)
+        return newRun
